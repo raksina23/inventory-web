@@ -31,14 +31,14 @@ export default function Dashboard() {
       // สมมติว่าตาราง orders มี column: created_at, total_price
       const { data: orders, error: orderError } = await supabase
         .from('orders')
-        .select('total_price')
+        .select('total_amount, created_at')
         .gte('created_at', today + 'T00:00:00') // ตั้งแต่เที่ยงคืน
         .lte('created_at', today + 'T23:59:59') // ถึงก่อนเที่ยงคืนวันถัดไป
 
       if (orderError) throw orderError
 
       // คำนวณยอดรวม
-      const totalSales = orders.reduce((sum, order) => sum + (order.total_price || 0), 0)
+      const totalSales = orders.reduce((sum, order) => sum + (order.total_amount || 0), 0)
       
       // --- ดึงข้อมูลสินค้า (จากตาราง products) ---
       const { data: products, error: prodError } = await supabase

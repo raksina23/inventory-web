@@ -1,5 +1,8 @@
 import { supabase } from '@/lib/supabase'
 
+export const dynamic = 'force-dynamic' // ใช้สำหรับการดึงข้อมูลแบบ dynamic
+export const revalidate = 0 // ไม่ต้องการ caching
+
 export default async function Home() {
   // ดึงข้อมูลสินค้าจาก Supabase
   const { data: products, error } = await supabase
